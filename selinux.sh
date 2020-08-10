@@ -2,6 +2,10 @@
 # Written for PiHole by Nikola Krgovic (nkrgovic at gmail dot com )
 # Release under EUPL
 
+# Get selinux userland tools
+
+yum install -y policycoreutils-python* 
+
 # Set SE Linux Booleans required for PiHole 
 
 setsebool -P nis_enabled on
