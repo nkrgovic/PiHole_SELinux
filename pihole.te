@@ -1,0 +1,31 @@
+# Written for PiHole by Nikola Krgovic (nkrgovic at gmail dot com )
+# Release under EUPL 
+
+module pihole 1.0;
+
+require {
+	type bin_t;
+	type shadow_t;
+	type systemd_logind_t;
+	type httpd_t;
+	type unreserved_port_t;
+	type etc_t;
+	type httpd_log_t;
+	type var_t;
+	class file { execmod getattr map open read write };
+	class capability { audit_write sys_resource };
+	class process setrlimit;
+	class netlink_audit_socket nlmsg_relay;
+	class dbus send_msg;
+	class tcp_socket name_connect;
+}
+
+#============= httpd_t ==============
+allow httpd_t bin_t:file execmod;
+allow httpd_t etc_t:file write;
+allow httpd_t httpd_log_t:file write;
+
+
+#============= systemd_logind_t ==============
+allow systemd_logind_t httpd_t:dbus send_msg;
+
